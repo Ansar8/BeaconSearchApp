@@ -1,5 +1,6 @@
 package com.example.baiconsearchapp
 
+import android.bluetooth.le.ScanResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,10 +15,19 @@ class BeaconsViewModel: ViewModel() {
     private val _beaconList = MutableLiveData<List<Beacon>>()
     val beaconList: LiveData<List<Beacon>> = _beaconList
 
-    fun updateBeacons(beacons: List<Beacon>){
+    private val _bleDeviceList = MutableLiveData<List<ScanResult>>()
+    val bleDeviceList: LiveData<List<ScanResult>> = _bleDeviceList
+
+    fun updateBeaconList(beacons: List<Beacon>){
         if (beacons.isNotEmpty()){
             _beaconList.value = beacons.sortedBy { it.distance }
         }
         _isLoading.value = false
+    }
+
+    fun updateBleDeviceList(bleDevices: List<ScanResult>){
+        if (bleDevices.isNotEmpty()){
+            _bleDeviceList.value = bleDevices
+        }
     }
 }

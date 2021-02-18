@@ -2,8 +2,8 @@ package com.example.baiconsearchapp
 
 import android.Manifest
 import android.app.AlertDialog
-import android.bluetooth.le.AdvertiseCallback
-import android.bluetooth.le.AdvertiseSettings
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.le.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +19,12 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
     private lateinit var beaconManager: BeaconManager
     private val viewModel: BeaconsViewModel by viewModels()
 
+    private val bleScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
+    private val scanSettings = ScanSettings.Builder()
+        .setScanMode(ScanSettings.SCAN_MODE_BALANCED)
+        .setReportDelay(5000L)
+        .build()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,9 +32,9 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         verifyBluetooth()
         askAndCheckPermissions()
         setupBeaconManager()
-        //transmitAsBeacon()
 
         if (savedInstanceState == null) {
+            startBleScanner()
             supportFragmentManager.commit {
                 add(R.id.fragments_container, BeaconsFragment.newInstance())
             }
@@ -38,6 +44,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
     override fun onDestroy() {
         super.onDestroy()
         beaconManager.unbind(this)
+        bleScanner.stopScan(scanCallback)
     }
 
     override fun moveToBeaconDetails(beaconId: String) {
@@ -52,7 +59,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         beaconManager.removeAllMonitorNotifiers()
         beaconManager.addRangeNotifier { beacons, region ->
             if (beacons.isNotEmpty()) {
-                viewModel.updateBeacons(beacons.toList())
+                viewModel.updateBeaconList(beacons.toList())
                 Log.d(TAG, "Found beacons -> count:  " + beacons.size)
             }
         }
@@ -92,6 +99,31 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         beaconManager.foregroundBetweenScanPeriod = 5000L
         beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT))
         beaconManager.bind(this)
+    }
+
+    private fun startBleScanner() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (bleScanner != null) {
+                    bleScanner.startScan(null, scanSettings, scanCallback);
+                    Log.d(TAG, "scan started");
+                } else {
+                    Log.e(TAG, "could not get scanner object");
+                }
+            }
+        }
+    }
+
+    private val scanCallback = object : ScanCallback() {
+        override fun onBatchScanResults(results: MutableList<ScanResult>?) {
+            if (results?.isNotEmpty() == true) {
+                viewModel.updateBleDeviceList(results)
+            }
+            Log.i(TAG, "onBatchScanResults: amount of found ble devices is ${results?.size ?: 0}")
+        }
+        override fun onScanFailed(errorCode: Int) {
+            Log.e(TAG, "onScanFailed: code $errorCode")
+        }
     }
 
     private fun askAndCheckPermissions(){
@@ -135,29 +167,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         builder.setPositiveButton(android.R.string.ok, null)
         builder.setOnDismissListener { }
         builder.show()
-    }
-
-    private fun transmitAsBeacon() {
-        val beacon = Beacon.Builder()
-            .setId1("2f234454-cf6d-4a0f-adf2-f4911ba9ffa6")
-            .setId2("1")
-            .setId3("2")
-            .setManufacturer(0x0118)
-            .setTxPower(-59)
-            .setDataFields(listOf(0L))
-            .build()
-        val beaconParser = BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT)
-        val beaconTransmitter = BeaconTransmitter(applicationContext, beaconParser)
-
-        beaconTransmitter.startAdvertising(beacon, object : AdvertiseCallback() {
-            override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {
-                Log.i(TAG, "Advertisement start succeeded.");
-            }
-
-            override fun onStartFailure(errorCode: Int) {
-                Log.e(TAG, "Advertisement start failed with code: $errorCode");
-            }
-        })
     }
 
     companion object {
