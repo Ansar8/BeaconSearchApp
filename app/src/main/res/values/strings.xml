@@ -4,10 +4,11 @@
     <string name="major_text">MAJOR: %1$s </string>
     <string name="minor_text">MINOR: %1$s</string>
     <string name="rssi_text">RSSI: %1$s</string>
-    <string name="distance_text">DISTANCE: %1$s</string>
+    <string name="distance_text">DISTANCE: %1$s m</string>
     <string name="uuid_title_tv">UUID:</string>
     <string name="major_title_tv">MAJOR:</string>
     <string name="minor_title_tv">MINOR:</string>
     <string name="rssi_title_tv">RSSI:</string>
     <string name="distance_title_tv">DISTANCE:</string>
+    <string name="distance_in_meters">%1$s m</string>
 </resources>

@@ -56,7 +56,9 @@ class BeaconViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             text = this@BeaconViewHolder.context.getString(R.string.rssi_text, beacon.rssi.toString())
         }
         itemView.findViewById<TextView>(R.id.distance_tv).apply {
-            text = this@BeaconViewHolder.context.getString(R.string.distance_text, beacon.distance.toString())
+            text = this@BeaconViewHolder.context.getString(
+                R.string.distance_text,
+                String.format("%.3f", beacon.distance))
         }
 
     }

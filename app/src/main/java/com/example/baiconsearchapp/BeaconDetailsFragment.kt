@@ -47,7 +47,10 @@ class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {
             majorTextView.text = beacon.id2.toString()
             minorTextView.text = beacon.id3.toString()
             rssiTextView.text = beacon.rssi.toString()
-            distanceTextView.text = beacon.distance.toString()
+            distanceTextView.text = requireContext().getString(
+                R.string.distance_in_meters,
+                String.format("%.3f", beacon.distance)
+            )
         }
         else{
             uuidTextView.text = beaconId
