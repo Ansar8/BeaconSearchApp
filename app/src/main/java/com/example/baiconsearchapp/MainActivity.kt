@@ -15,16 +15,11 @@ import androidx.fragment.app.commit
 import com.example.baiconsearchapp.BeaconsFragment.BeaconItemClickListener
 import org.altbeacon.beacon.*
 
-class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListener {
-
-    private lateinit var beaconManager: BeaconManager
-    private val viewModel: BluetoothDevicesViewModel by viewModels()
+class MainActivity : AppCompatActivity(), BeaconItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        setupBeaconManager()
 
         if (savedInstanceState == null) {
             verifyBluetooth()
@@ -36,33 +31,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        beaconManager.unbind(this)
-    }
-
     override fun moveToBeaconDetails(beaconId: String) {
         supportFragmentManager.commit {
             addToBackStack(null)
             add(R.id.fragments_container, BeaconDetailsFragment.newInstance(beaconId))
-        }
-    }
-
-    override fun onBeaconServiceConnect() {
-
-        beaconManager.removeAllMonitorNotifiers()
-        beaconManager.addRangeNotifier { beacons, region ->
-            if (beacons.isNotEmpty()) {
-                viewModel.updateBeaconList(beacons.toList())
-                Log.d(TAG, "Found beacons -> count:  " + beacons.size)
-            }
-        }
-
-        try {
-            beaconManager.startRangingBeaconsInRegion(Region("myRangingUniqueId", null, null, null))
-        }
-        catch (e: Exception){
-            Log.d(TAG, "Something is wrong " + e.message)
         }
     }
 
@@ -84,15 +56,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
                 return
             }
         }
-    }
-
-    private fun setupBeaconManager(){
-        beaconManager = BeaconManager.getInstanceForApplication(this)
-        BeaconManager.setBeaconSimulator(MyBeaconSimulator())
-
-        beaconManager.foregroundBetweenScanPeriod = 3000L
-        beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT))
-        beaconManager.bind(this)
     }
 
     private fun askAndCheckPermissions(){
