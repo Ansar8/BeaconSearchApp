@@ -31,7 +31,6 @@ class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {
 
         val activity = activity as? MainActivity
         activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        activity?.supportActionBar?.title = "Beacon details"
         setHasOptionsMenu(true)
 
         uuidTextView = view.findViewById(R.id.uuid_details_tv)

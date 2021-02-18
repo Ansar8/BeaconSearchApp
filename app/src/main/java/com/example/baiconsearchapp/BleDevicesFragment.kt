@@ -19,9 +19,6 @@ class BleDevicesFragment : Fragment(R.layout.fragment_ble_devices) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activity = activity as? MainActivity
-        activity?.supportActionBar?.title = "BLE devices list"
-
         recycler = view.findViewById(R.id.recycler_view_ble_devices)
         recycler.adapter = BleDevicesAdapter()
         recycler.layoutManager = LinearLayoutManager(context)

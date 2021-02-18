@@ -22,9 +22,6 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activity = activity as? MainActivity
-        activity?.supportActionBar?.title = "Beacons list"
-
         recycler = view.findViewById(R.id.recycler_view_beacons)
         recycler.adapter = BeaconsAdapter(clickListener)
         recycler.layoutManager = LinearLayoutManager(context)
@@ -54,6 +51,11 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list) {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is BeaconItemClickListener) listener = context
+    }
+
+    override fun onDetach() {
+        listener = null
+        super.onDetach()
     }
 
     interface BeaconItemClickListener {

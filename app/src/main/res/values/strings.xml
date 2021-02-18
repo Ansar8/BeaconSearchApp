@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BeaconSearchApp</string>
+    <string name="app_name">BLE Devices Search App</string>
     <string name="uuid_text">UUID: %1$s</string>
     <string name="major_text">MAJOR: %1$s </string>
     <string name="minor_text">MINOR: %1$s</string>

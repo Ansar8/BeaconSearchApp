@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import com.example.baiconsearchapp.BeaconsFragment.BeaconItemClickListener
@@ -17,13 +18,19 @@ import org.altbeacon.beacon.*
 class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListener {
 
     private lateinit var beaconManager: BeaconManager
-    private val viewModel: BeaconsViewModel by viewModels()
 
     private val bleScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
+
+    @RequiresApi(Build.VERSION_CODES.M)
     private val scanSettings = ScanSettings.Builder()
         .setScanMode(ScanSettings.SCAN_MODE_BALANCED)
+        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
+        .setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE)
+        .setNumOfMatches(ScanSettings.MATCH_NUM_ONE_ADVERTISEMENT)
         .setReportDelay(5000L)
         .build()
+
+    private val viewModel: BluetoothDevicesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +39,11 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         verifyBluetooth()
         askAndCheckPermissions()
         setupBeaconManager()
+        startBleScanner()
 
         if (savedInstanceState == null) {
-            startBleScanner()
             supportFragmentManager.commit {
-                add(R.id.fragments_container, BeaconsFragment.newInstance())
+                add(R.id.fragments_container, DevicesViewPagerFragment())
             }
         }
     }
@@ -96,7 +103,7 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         beaconManager = BeaconManager.getInstanceForApplication(this)
         BeaconManager.setBeaconSimulator(MyBeaconSimulator())
 
-        beaconManager.foregroundBetweenScanPeriod = 5000L
+        beaconManager.foregroundBetweenScanPeriod = 3000L
         beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT))
         beaconManager.bind(this)
     }
@@ -105,10 +112,10 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 if (bleScanner != null) {
-                    bleScanner.startScan(null, scanSettings, scanCallback);
-                    Log.d(TAG, "scan started");
+                    bleScanner.startScan(null, scanSettings, scanCallback)
+                    Log.d(TAG, "scan started")
                 } else {
-                    Log.e(TAG, "could not get scanner object");
+                    Log.e(TAG, "could not get scanner object")
                 }
             }
         }

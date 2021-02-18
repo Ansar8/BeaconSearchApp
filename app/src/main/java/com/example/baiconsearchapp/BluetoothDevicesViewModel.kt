@@ -24,14 +24,14 @@ class BluetoothDevicesViewModel: ViewModel() {
     fun updateBeaconList(beacons: List<Beacon>){
         if (beacons.isNotEmpty()){
             _beaconList.value = beacons.sortedBy { it.distance }
+            _isBeaconsLoading.value = false
         }
-        _isBeaconsLoading.value = false
     }
 
     fun updateBleDeviceList(bleDevices: List<ScanResult>){
         if (bleDevices.isNotEmpty()){
             _bleDeviceList.value = bleDevices
+            _isBleDevicesLoading.value = false
         }
-        _isBleDevicesLoading.value = false
     }
 }
