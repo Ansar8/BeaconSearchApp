@@ -18,18 +18,6 @@ import org.altbeacon.beacon.*
 class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListener {
 
     private lateinit var beaconManager: BeaconManager
-
-    private val bleScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    private val scanSettings = ScanSettings.Builder()
-        .setScanMode(ScanSettings.SCAN_MODE_BALANCED)
-        .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
-        .setMatchMode(ScanSettings.MATCH_MODE_AGGRESSIVE)
-        .setNumOfMatches(ScanSettings.MATCH_NUM_ONE_ADVERTISEMENT)
-        .setReportDelay(5000L)
-        .build()
-
     private val viewModel: BluetoothDevicesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +27,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         verifyBluetooth()
         askAndCheckPermissions()
         setupBeaconManager()
-        startBleScanner()
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
@@ -51,7 +38,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
     override fun onDestroy() {
         super.onDestroy()
         beaconManager.unbind(this)
-        bleScanner.stopScan(scanCallback)
     }
 
     override fun moveToBeaconDetails(beaconId: String) {
@@ -106,31 +92,6 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         beaconManager.foregroundBetweenScanPeriod = 3000L
         beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT))
         beaconManager.bind(this)
-    }
-
-    private fun startBleScanner() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                if (bleScanner != null) {
-                    bleScanner.startScan(null, scanSettings, scanCallback)
-                    Log.d(TAG, "scan started")
-                } else {
-                    Log.e(TAG, "could not get scanner object")
-                }
-            }
-        }
-    }
-
-    private val scanCallback = object : ScanCallback() {
-        override fun onBatchScanResults(results: MutableList<ScanResult>?) {
-            if (results?.isNotEmpty() == true) {
-                viewModel.updateBleDeviceList(results)
-            }
-            Log.i(TAG, "onBatchScanResults: amount of found ble devices is ${results?.size ?: 0}")
-        }
-        override fun onScanFailed(errorCode: Int) {
-            Log.e(TAG, "onScanFailed: code $errorCode")
-        }
     }
 
     private fun askAndCheckPermissions(){
