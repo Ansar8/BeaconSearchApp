@@ -3,6 +3,7 @@ package com.example.baiconsearchapp
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -31,6 +32,11 @@ class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val activity = activity as? MainActivity
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activity?.supportActionBar?.title = "Beacon details"
+        setHasOptionsMenu(true)
+
         uuidTextView = view.findViewById(R.id.uuid_details_tv)
         majorTextView = view.findViewById(R.id.major_details_tv)
         minorTextView = view.findViewById(R.id.minor_details_tv)
@@ -38,6 +44,24 @@ class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {
         distanceTextView = view.findViewById(R.id.distance_details_tv)
 
         viewModel.beaconList.observe(this.viewLifecycleOwner,this::showBeaconDetails)
+    }
+
+    override fun onDestroyView() {
+        val activity = activity as? MainActivity
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        setHasOptionsMenu(false)
+        super.onDestroyView()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val activity = activity as? MainActivity
+        return when (item.itemId) {
+            android.R.id.home -> {
+                activity?.onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun showBeaconDetails(beacons: List<Beacon>) {
