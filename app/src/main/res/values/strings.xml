@@ -11,4 +11,11 @@
     <string name="rssi_title_tv">RSSI:</string>
     <string name="distance_title_tv">DISTANCE:</string>
     <string name="distance_in_meters">%1$s m</string>
+    <string name="func_limited_alert_title">Functionality limited</string>
+    <string name="location_access_not_granted_alert_message">Since location access has not been granted, this app will not be able to discover beacons.</string>
+    <string name="location_access_not_granted_full_alert_message"><![CDATA[Since location access has not been granted, this app will not be able to discover beacons.  Please go to Settings -> Applications -> Permissions and grant location access to this app.]]></string>
+    <string name="bluetooth_not_enabled_alert_title">Bluetooth not enabled</string>
+    <string name="bluetooth_not_enabled_alert_message">Please enable bluetooth in settings and restart this application.</string>
+    <string name="bluetooth_le_not_available_alert_title">Bluetooth LE not available</string>
+    <string name="bluetooth_le_not_available_alert_message">Sorry, this device does not support Bluetooth LE.</string>
 </resources>
