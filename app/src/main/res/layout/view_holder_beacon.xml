@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/actor_image_container"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    android:layout_gravity="center"
+    android:backgroundTint="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/uuid_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/beacon_property_tv_margin"
+            android:textSize="@dimen/beacon_property_tv_size"
+            tools:text="UUID: DF7E1C79-43E9-44FF-886F-1D1F7DA6997A" />
+
+        <TextView
+            android:id="@+id/major_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/beacon_property_tv_margin"
+            android:textSize="@dimen/beacon_property_tv_size"
+            tools:text="MAJOR: 123" />
+
+        <TextView
+            android:id="@+id/minor_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/beacon_property_tv_margin"
+            android:textSize="@dimen/beacon_property_tv_size"
+            tools:text="MINOR: 123" />
+
+        <TextView
+            android:id="@+id/rssi_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/beacon_property_tv_margin"
+            android:textSize="@dimen/beacon_property_tv_size"
+            tools:text="RSSI: 123" />
+
+        <TextView
+            android:id="@+id/distance_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/beacon_property_tv_margin"
+            android:textSize="@dimen/beacon_property_tv_size"
+            tools:text="DISTANCE: 123" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

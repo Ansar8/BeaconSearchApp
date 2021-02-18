@@ -8,7 +8,7 @@ import org.altbeacon.beacon.Beacon
 
 class BeaconsViewModel: ViewModel() {
 
-    private val _beaconList = MutableLiveData<List<Beacon>>(emptyList())
+    private val _beaconList = MutableLiveData<List<Beacon>>()
     val beaconList: LiveData<List<Beacon>> = _beaconList
 
     fun updateBeacons(beacons: List<Beacon>){
