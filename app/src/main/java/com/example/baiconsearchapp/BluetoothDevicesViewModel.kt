@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModel
 import org.altbeacon.beacon.Beacon
 
 
-class BeaconsViewModel: ViewModel() {
+class BluetoothDevicesViewModel: ViewModel() {
 
-    private val _isLoading = MutableLiveData(true)
-    val isLoading: LiveData<Boolean> = _isLoading
+    private val _isBeaconsLoading = MutableLiveData(true)
+    val isBeaconsLoading: LiveData<Boolean> = _isBeaconsLoading
+
+    private val _isBleDevicesLoading = MutableLiveData(true)
+    val isBleDevicesLoading: LiveData<Boolean> = _isBleDevicesLoading
 
     private val _beaconList = MutableLiveData<List<Beacon>>()
     val beaconList: LiveData<List<Beacon>> = _beaconList
@@ -22,12 +25,13 @@ class BeaconsViewModel: ViewModel() {
         if (beacons.isNotEmpty()){
             _beaconList.value = beacons.sortedBy { it.distance }
         }
-        _isLoading.value = false
+        _isBeaconsLoading.value = false
     }
 
     fun updateBleDeviceList(bleDevices: List<ScanResult>){
         if (bleDevices.isNotEmpty()){
             _bleDeviceList.value = bleDevices
         }
+        _isBleDevicesLoading.value = false
     }
 }

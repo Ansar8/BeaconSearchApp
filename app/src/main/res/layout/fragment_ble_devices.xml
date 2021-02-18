@@ -9,17 +9,17 @@
     android:padding="20dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_beacons"
+        android:id="@+id/recycler_view_ble_devices"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:listitem="@layout/view_holder_beacon"/>
+        tools:listitem="@layout/view_holder_ble_device"/>
 
     <ProgressBar
-        android:id="@+id/beacons_progress_bar"
+        android:id="@+id/ble_devices_progress_bar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:visibility="invisible"

@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,7 @@ import org.altbeacon.beacon.Beacon
 class BeaconsFragment : Fragment(R.layout.fragment_beacon_list) {
 
     private var listener: BeaconItemClickListener? = null
-    private val viewModel: BeaconsViewModel by activityViewModels()
+    private val viewModel: BluetoothDevicesViewModel by activityViewModels()
     private lateinit var recycler: RecyclerView
     private lateinit var progressBar: ProgressBar
 
@@ -30,10 +29,10 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list) {
         recycler.adapter = BeaconsAdapter(clickListener)
         recycler.layoutManager = LinearLayoutManager(context)
 
-        progressBar = view.findViewById(R.id.progress_bar)
+        progressBar = view.findViewById(R.id.beacons_progress_bar)
 
         viewModel.beaconList.observe(this.viewLifecycleOwner, this::updateBeaconList)
-        viewModel.isLoading.observe(this.viewLifecycleOwner, this::showProgressBar)
+        viewModel.isBeaconsLoading.observe(this.viewLifecycleOwner, this::showProgressBar)
     }
 
     private fun updateBeaconList(beacons: List<Beacon>) {

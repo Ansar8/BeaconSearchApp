@@ -2,19 +2,16 @@ package com.example.baiconsearchapp
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
 import org.altbeacon.beacon.Beacon
 
 class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {
 
     private var beaconId: String? = null
-    private val viewModel: BeaconsViewModel by activityViewModels()
+    private val viewModel: BluetoothDevicesViewModel by activityViewModels()
 
     private lateinit var uuidTextView: TextView
     private lateinit var majorTextView: TextView
