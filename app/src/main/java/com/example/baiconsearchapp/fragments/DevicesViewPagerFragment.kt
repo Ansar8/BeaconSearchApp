@@ -1,10 +1,12 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.fragments
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.baiconsearchapp.R
+import com.example.baiconsearchapp.adapters.DevicesViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

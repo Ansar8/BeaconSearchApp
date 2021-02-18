@@ -1,4 +1,4 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.helpers
 
 import org.altbeacon.beacon.Beacon
 import org.altbeacon.beacon.simulator.BeaconSimulator
@@ -12,21 +12,21 @@ class MyBeaconSimulator: BeaconSimulator {
                 .setId1(UUID.randomUUID().toString())
                 .setId2("1")
                 .setId3("1")
-                .setRssi(-55)
+                .setRssi((-55..-45).random())
                 .setTxPower(-45)
                 .build(),
             Beacon.Builder()
                 .setId1(UUID.randomUUID().toString())
                 .setId2("3")
                 .setId3("4")
-                .setRssi(-50)
+                .setRssi((-55..-45).random())
                 .setTxPower(-59)
                 .build(),
             Beacon.Builder()
                 .setId1(UUID.randomUUID().toString())
                 .setId2("7")
                 .setId3("8")
-                .setRssi(-55)
+                .setRssi((-55..-45).random())
                 .setTxPower(-55)
                 .build()
         )

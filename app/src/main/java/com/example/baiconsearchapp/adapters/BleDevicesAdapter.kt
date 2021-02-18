@@ -1,4 +1,4 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.adapters
 
 import android.bluetooth.le.ScanResult
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.baiconsearchapp.R
 
 class BleDevicesAdapter : RecyclerView.Adapter<BleDeviceViewHolder>() {
 

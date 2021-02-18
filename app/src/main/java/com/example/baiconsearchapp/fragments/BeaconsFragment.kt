@@ -1,4 +1,4 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.fragments
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.baiconsearchapp.BeaconsAdapter.*
+import com.example.baiconsearchapp.viewmodels.BeaconsViewModel
+import com.example.baiconsearchapp.helpers.MyBeaconSimulator
+import com.example.baiconsearchapp.R
+import com.example.baiconsearchapp.adapters.BeaconsAdapter
+import com.example.baiconsearchapp.adapters.BeaconsAdapter.*
 import org.altbeacon.beacon.*
 
 class BeaconsFragment : Fragment(R.layout.fragment_beacon_list), BeaconConsumer {

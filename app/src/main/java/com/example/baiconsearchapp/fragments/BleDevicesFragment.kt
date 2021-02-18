@@ -1,4 +1,4 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.fragments
 
 import android.Manifest
 import android.bluetooth.le.ScanResult
@@ -12,6 +12,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.baiconsearchapp.viewmodels.BleDevicesViewModel
+import com.example.baiconsearchapp.R
+import com.example.baiconsearchapp.adapters.BleDevicesAdapter
 
 class BleDevicesFragment : Fragment(R.layout.fragment_ble_devices) {
 

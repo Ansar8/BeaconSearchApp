@@ -1,4 +1,4 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.viewmodels
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.le.ScanCallback
@@ -9,7 +9,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.altbeacon.beacon.Beacon
 
 
 class BleDevicesViewModel: ViewModel() {

@@ -1,10 +1,11 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.baiconsearchapp.R
 import org.altbeacon.beacon.Beacon
 
 class BeaconsAdapter(

@@ -1,4 +1,4 @@
-package com.example.baiconsearchapp
+package com.example.baiconsearchapp.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,9 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import com.example.baiconsearchapp.viewmodels.BeaconsViewModel
+import com.example.baiconsearchapp.MainActivity
+import com.example.baiconsearchapp.R
 import org.altbeacon.beacon.Beacon
 
 class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {

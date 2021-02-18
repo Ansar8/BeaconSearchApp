@@ -2,17 +2,15 @@ package com.example.baiconsearchapp
 
 import android.Manifest
 import android.app.AlertDialog
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.le.*
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import com.example.baiconsearchapp.BeaconsFragment.BeaconItemClickListener
+import com.example.baiconsearchapp.fragments.BeaconsFragment.BeaconItemClickListener
+import com.example.baiconsearchapp.fragments.BeaconDetailsFragment
+import com.example.baiconsearchapp.fragments.DevicesViewPagerFragment
 import org.altbeacon.beacon.*
 
 class MainActivity : AppCompatActivity(), BeaconItemClickListener {
