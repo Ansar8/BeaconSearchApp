@@ -24,11 +24,12 @@ class MainActivity : AppCompatActivity(), BeaconConsumer, BeaconItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        verifyBluetooth()
-        askAndCheckPermissions()
         setupBeaconManager()
 
         if (savedInstanceState == null) {
+            verifyBluetooth()
+            askAndCheckPermissions()
+
             supportFragmentManager.commit {
                 add(R.id.fragments_container, DevicesViewPagerFragment())
             }
