@@ -18,4 +18,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/view_holder_beacon"/>
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:visibility="invisible"
+        android:indeterminateDrawable="@drawable/circular_progress_bar"
+        android:indeterminateOnly="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

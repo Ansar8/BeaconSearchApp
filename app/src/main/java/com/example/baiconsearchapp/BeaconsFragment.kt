@@ -4,7 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list) {
     private var listener: BeaconItemClickListener? = null
     private val viewModel: BeaconsViewModel by activityViewModels()
     private lateinit var recycler: RecyclerView
+    private lateinit var progressBar: ProgressBar
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,13 +27,20 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list) {
         recycler.adapter = BeaconsAdapter(clickListener)
         recycler.layoutManager = LinearLayoutManager(context)
 
-        viewModel.beaconList.observe(this.viewLifecycleOwner,this::updateBeaconList)
+        progressBar = view.findViewById(R.id.progress_bar)
+
+        viewModel.beaconList.observe(this.viewLifecycleOwner, this::updateBeaconList)
+        viewModel.isLoading.observe(this.viewLifecycleOwner, this::showProgressBar)
     }
 
     private fun updateBeaconList(beacons: List<Beacon>) {
         (recycler.adapter as? BeaconsAdapter)?.apply {
             bindBeacons(beacons)
         }
+    }
+
+    private fun showProgressBar(isVisible: Boolean){
+        progressBar.isVisible = isVisible
     }
 
     private val clickListener = object : OnRecyclerItemClicked {
