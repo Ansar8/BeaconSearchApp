@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.baiconsearchapp.BeaconsAdapter.*
@@ -19,7 +18,7 @@ import org.altbeacon.beacon.*
 class BeaconsFragment : Fragment(R.layout.fragment_beacon_list), BeaconConsumer {
 
     private var listener: BeaconItemClickListener? = null
-    private val viewModel: BluetoothDevicesViewModel by activityViewModels()
+    private val viewModel: BeaconsViewModel by activityViewModels()
     private lateinit var beaconManager: BeaconManager
     private lateinit var recycler: RecyclerView
     private lateinit var progressBar: ProgressBar

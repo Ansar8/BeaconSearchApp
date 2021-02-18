@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class BleDevicesFragment : Fragment(R.layout.fragment_ble_devices) {
 
-    private val viewModel: BluetoothDevicesViewModel by activityViewModels()
+    private val viewModel: BleDevicesViewModel by activityViewModels()
     private lateinit var recycler: RecyclerView
     private lateinit var progressBar: ProgressBar
     

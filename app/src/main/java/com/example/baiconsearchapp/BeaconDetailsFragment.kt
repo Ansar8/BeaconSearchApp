@@ -11,7 +11,7 @@ import org.altbeacon.beacon.Beacon
 class BeaconDetailsFragment : Fragment(R.layout.fragment_beacon_details) {
 
     private var beaconId: String? = null
-    private val viewModel: BluetoothDevicesViewModel by activityViewModels()
+    private val viewModel: BeaconsViewModel by activityViewModels()
 
     private lateinit var uuidTextView: TextView
     private lateinit var majorTextView: TextView
