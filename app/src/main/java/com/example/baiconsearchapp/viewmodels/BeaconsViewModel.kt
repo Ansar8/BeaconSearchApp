@@ -7,6 +7,9 @@ import org.altbeacon.beacon.Beacon
 
 class BeaconsViewModel: ViewModel() {
 
+    private val _anyBeaconsNearby = MutableLiveData<Boolean>()
+    val anyBeaconsNearby: LiveData<Boolean> = _anyBeaconsNearby
+
     private val _isBeaconsLoading = MutableLiveData(true)
     val isBeaconsLoading: LiveData<Boolean> = _isBeaconsLoading
 
@@ -14,10 +17,9 @@ class BeaconsViewModel: ViewModel() {
     val beaconList: LiveData<List<Beacon>> = _beaconList
 
     fun updateBeaconList(beacons: List<Beacon>){
-        if (beacons.isNotEmpty()){
-            _beaconList.value = beacons.sortedBy { it.distance }
-            _isBeaconsLoading.value = false
-        }
+        _beaconList.value = beacons.sortedBy { it.distance }
+        _anyBeaconsNearby.value = beacons.isNotEmpty()
+        _isBeaconsLoading.value = false
     }
 
     companion object {

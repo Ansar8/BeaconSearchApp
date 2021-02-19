@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,13 +27,14 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list), BeaconConsumer 
     private lateinit var beaconManager: BeaconManager
     private lateinit var recycler: RecyclerView
     private lateinit var progressBar: ProgressBar
+    private lateinit var noBeaconsMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         beaconManager = BeaconManager.getInstanceForApplication(requireActivity())
-        //Provides simulated beacons as a working example
-        BeaconManager.setBeaconSimulator(MyBeaconSimulator())
+        // Provides simulated beacons as a working example
+        // BeaconManager.setBeaconSimulator(MyBeaconSimulator())
         beaconManager.foregroundBetweenScanPeriod = 3000L
         beaconManager.beaconParsers.add(BeaconParser().setBeaconLayout(BeaconParser.ALTBEACON_LAYOUT))
         beaconManager.bind(this)
@@ -46,18 +48,18 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list), BeaconConsumer 
         recycler.layoutManager = LinearLayoutManager(context)
 
         progressBar = view.findViewById(R.id.beacons_progress_bar)
+        noBeaconsMessage =  view.findViewById(R.id.no_beacons_message)
 
         viewModel.beaconList.observe(this.viewLifecycleOwner, this::updateBeaconList)
         viewModel.isBeaconsLoading.observe(this.viewLifecycleOwner, this::showProgressBar)
+        viewModel.anyBeaconsNearby.observe(this.viewLifecycleOwner, this::showNoBeaconsMessage)
     }
 
     override fun onBeaconServiceConnect() {
         beaconManager.removeAllMonitorNotifiers()
         beaconManager.addRangeNotifier { beacons, region ->
-            if (beacons.isNotEmpty()) {
-                viewModel.updateBeaconList(beacons.toList())
-                Log.d(TAG, "Found beacons -> count:  " + beacons.size)
-            }
+            viewModel.updateBeaconList(beacons.toList())
+            Log.d(TAG, "Found beacons -> count:  " + beacons.size)
         }
 
         try {
@@ -87,6 +89,10 @@ class BeaconsFragment : Fragment(R.layout.fragment_beacon_list), BeaconConsumer 
 
     private fun showProgressBar(isVisible: Boolean){
         progressBar.isVisible = isVisible
+    }
+
+    private fun showNoBeaconsMessage(isVisible: Boolean) {
+        noBeaconsMessage.isVisible = !isVisible
     }
 
     private val clickListener = object : OnRecyclerItemClicked {
