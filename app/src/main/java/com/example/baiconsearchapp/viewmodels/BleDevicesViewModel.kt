@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModel
 
 class BleDevicesViewModel: ViewModel() {
 
+    private val _anyBleDeviceNearby = MutableLiveData<Boolean>()
+    val anyBleDeviceNearby: LiveData<Boolean> = _anyBleDeviceNearby
+
     private val _isBleDevicesLoading = MutableLiveData(true)
     val isBleDevicesLoading: LiveData<Boolean> = _isBleDevicesLoading
 
@@ -20,10 +23,9 @@ class BleDevicesViewModel: ViewModel() {
     val bleDeviceList: LiveData<List<ScanResult>> = _bleDeviceList
 
     fun updateBleDeviceList(bleDevices: List<ScanResult>){
-        if (bleDevices.isNotEmpty()){
-            _bleDeviceList.value = bleDevices
-            _isBleDevicesLoading.value = false
-        }
+        _bleDeviceList.value = bleDevices
+        _anyBleDeviceNearby.value = bleDevices.isNotEmpty()
+        _isBleDevicesLoading.value = false
     }
 
     private val bleScanner = BluetoothAdapter.getDefaultAdapter().bluetoothLeScanner
@@ -53,9 +55,7 @@ class BleDevicesViewModel: ViewModel() {
 
     private val scanCallback = object : ScanCallback() {
         override fun onBatchScanResults(results: MutableList<ScanResult>?) {
-            if (results?.isNotEmpty() == true) {
-                updateBleDeviceList(results)
-            }
+            results?.let { updateBleDeviceList(it) }
             Log.i(TAG, "onBatchScanResults: amount of found ble devices is ${results?.size ?: 0}")
         }
         override fun onScanFailed(errorCode: Int) {
